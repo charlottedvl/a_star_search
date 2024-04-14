@@ -49,6 +49,11 @@ def a_star_search(graph, starting_node, goal_node):
             # Rearrange the path to have from start node to goal node
             path_found.reverse()
 
+            print("Parsed nodes:")
+            for node in closed:
+                # Print each one of the parsed nodes
+                print("Node:", node.name)
+
             print("Path found")
             for node in path_found:
                 # Print each node of the path
