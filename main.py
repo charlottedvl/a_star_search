@@ -31,7 +31,17 @@ def a_star_search(graph, starting_node, goal_node):
                 current_node = node
 
         if current_node == goal_node:
-            return print("Success")
+            path_found = []
+            while current_node:
+                path_found.append(current_node)
+                current_node = parents[current_node]
+            path_found.reverse()
+
+            print("Path found")
+            for node in path_found:
+                print("Node:",
+                      node.name)
+            return path_found
 
         fringe.remove(current_node)
 
