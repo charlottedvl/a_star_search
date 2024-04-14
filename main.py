@@ -20,11 +20,15 @@ class Graph:
 
 
 def a_star_search(graph, starting_node, goal_node):
+    # Initialize fringe and closed arrays
     fringe = [starting_node]
     closed = []
 
     # List of minimum g_cost to get to node n from start
     g_cost = {starting_node: 0}
+
+    # Initialize the f_cost of the starting node
+    f_cost = {starting_node: starting_node.f(g_cost[starting_node])}
 
     # Map of parents for each node
     parents = {starting_node: None}
@@ -36,7 +40,8 @@ def a_star_search(graph, starting_node, goal_node):
 
         # Search the node with the lowest f_cost
         for node in fringe:
-            if current_node is None or node.f(g_cost[node]) < current_node.f(g_cost[current_node]):
+            # Compare the f cost of the node to the f cost of the current node if it exists
+            if current_node is None or f_cost[node] < f_cost[current_node]:
                 current_node = node
 
         # Test if it is the goal node
@@ -72,7 +77,11 @@ def a_star_search(graph, starting_node, goal_node):
             if successor not in closed:
                 # Compute the g cost
                 g_cost[successor] = g_cost[current_node] + weight
+                # Update the f cost
+                f_cost[successor] = successor.f(g_cost[successor])
+                # Get track of the parent of the successor
                 parents[successor] = current_node
+                # Add the successor to the fringe
                 if successor not in fringe:
                     fringe.append(successor)
 
