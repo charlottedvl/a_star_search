@@ -81,3 +81,28 @@ def a_star_search(graph, starting_node, goal_node):
     # If we reach this point, it means that there no path retrieved that leads to goal
     print("No path found")
     return None
+
+
+# Creating the nodes
+start_node = Node("Start", 0)
+A_node = Node("A", 2)
+B_node = Node("B", 5)
+C_node = Node("C", 2)
+D_node = Node("D", 1)
+goal_node = Node("Goal", 0)
+
+# Creating the list of successors for each node
+successors_list = {
+    start_node: [(A_node, 2), (B_node, 3), (D_node, 5)],
+    A_node: [(start_node, 2), (C_node, 4)],
+    B_node: [(start_node, 3), (D_node, 4)],
+    C_node: [(A_node, 4), (D_node, 1), (goal_node, 2)],
+    D_node: [(start_node, 5), (B_node, 4), (C_node, 1), (goal_node, 5)],
+    goal_node: [(C_node, 2), (D_node, 5)]
+}
+
+# Creating the graph
+graph_given = Graph(successors_list)
+
+# Performing the A* search
+path = a_star_search(graph_given, start_node, goal_node)
