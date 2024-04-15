@@ -15,8 +15,8 @@ class Graph:
         self.successors_list = successors
 
     # Find all successors for a given node
-    def find_successors(self, v):
-        return self.successors_list[v]
+    def find_successors(self, node):
+        return self.successors_list[node]
 
 
 def a_star_search(graph, starting_node, goal_node):
