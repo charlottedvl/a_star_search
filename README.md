@@ -44,8 +44,8 @@ def __init__(self, successors):
 ```
 Initialized with a list of successors, the Graph class allows for the retrieval of successors for a given node through the find_successors method. 
 ``` python
-def find_successors(self, v):
-    return self.successors_list[v]
+def find_successors(self, node):
+    return self.successors_list[node]
 ```
 Thus, in this context, a graph can be understood as a set of interconnected nodes with defined relationships between them.
 
