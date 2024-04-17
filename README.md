@@ -203,15 +203,11 @@ if successor not in f_cost or successor.f(g_cost[successor]) <= f_cost[successor
 Then, in this example, we go through the successors of A which are C and Start and C is given A as a parent. We then explore D and C is also a successor of D. The cost to go to C by A or by D is the same (equals to 8).
 
 ``` math
-f(C) = h(C) + g(C)   
-f(C) = 2 + (2 + 4)    
-f(C) = 8
+f(C) = h(C) + g(C) = 2 + (2 + 4) = 8
 ```
 
 ``` math
-f(C) = h(C) + g'(C)  
-f(C) = 2 + (5 + 1)   
-f(C) = 8
+f(C) = h(C) + g'(C) = 2 + (5 + 1) = 8
 ```
 
 As the two paths have the same cost, only the latest parent is conserved (here D) and it explains why the path is Start - D - C - Goal.  
