@@ -76,6 +76,8 @@ current_node = None
 for node in fringe:
     if current_node is None or f_cost[node] < f_cost[current_node]:
         current_node = node
+    elif f_cost[node] == f_cost[current_node] and node.name < current_node.name:
+        current_node = node
 ```
 
 4. Test if the removed fringe is the goal node. If it is, returned the path found.
@@ -86,24 +88,28 @@ if current_node == goal_node:
     while current_node:
         path_found.append(current_node)
         current_node = parents[current_node]
-        path_found.reverse()
+    path_found.reverse()
 
-        print("Parsed nodes:")
-        for node in closed:
-            print("Node:", node.name)
+    print("Parsed nodes: ", end=" ")
+    for index, node in enumerate(closed):
+        print(node.name, end="")
+        if index < len(closed) - 1:
+            print(" - ", end="")
 
-        print("Path found")
-        for node in path_found:
-            print("Node:",
-                node.name)
-        return path_found
+    print("\nPath found: ", end=" ")
+    for node in path_found:
+        if node.name != goal_node.name:
+            print(node.name, end=" - ")
+        else:
+            print(node.name)
+    return path_found
 ```
 
 5. Remove the node from the FRINGE list and search for all its successors using the find_successor() function.
 
 ``` python
 fringe.remove(current_node)
-    successors = graph.find_successors(current_node)
+successors = graph.find_successors(current_node)
 ```
 
 6. Find the value f(n) of all successors, put them in the fringe list, and put the deleted node in closed.
@@ -112,8 +118,9 @@ fringe.remove(current_node)
 for (successor, weight) in successors:
     if successor not in closed:
         g_cost[successor] = g_cost[current_node] + weight
-        f_cost[successor] = successor.f(g_cost[successor])
-        parents[successor] = current_node
+        if successor not in f_cost or successor.f(g_cost[successor]) <= f_cost[successor]:
+            f_cost[successor] = successor.f(g_cost[successor])
+            parents[successor] = current_node
         if successor not in fringe:
             fringe.append(successor)
 closed.append(current_node)
@@ -179,3 +186,39 @@ We obtain those parsed nodes are Start, A, D and C.
 The final path is Start - D - C - Goal.  
 
 ![Path returned](images/results_path_found.png)
+
+Another path can be retrieved and still be correct: Start - A - C - Goal.  
+The path returned depends on the way we update the parent of a node. We update when we are looking at all the successors of a node. In the current code, we update it when the previous f_cost computed is superior or equal to the new f_cost.
+
+``` python
+if successor not in f_cost or successor.f(g_cost[successor]) <= f_cost[successor]:
+    f_cost[successor] = successor.f(g_cost[successor])
+    parents[successor] = current_node
+```
+
+Then, in this example, we go through the successors of A which are C and Start and C is given A as a parent. We then explore D and C is also a successor of D. The cost to go to C by A or by D is the same (equals to 8).
+
+``` math
+f(C) = h(C) + g(C)
+f(C) = 2 + (2 + 4) 
+f(C) = 8
+```
+
+``` math
+f(C) = h(C) + g'(C)
+f(C) = 2 + (5 + 1) 
+f(C) = 8
+```
+
+As the two paths have the same cost, only the latest parent is conserved (here D) and it explains why the path is Start - D - C - Goal.  
+It is possible to obtain the other path: Start - A - C - Goal. The only modification needed is to change the comparator from superior or equal to strictly superior: 
+
+``` python
+if successor not in f_cost or successor.f(g_cost[successor]) < f_cost[successor]:
+    f_cost[successor] = successor.f(g_cost[successor])
+    parents[successor] = current_node
+```
+
+With this code, it is possible to obtain the path: Start - A - C - Goal as C's parent isn't updated when the costs are equals. 
+
+![Alternative path returned](images/alternative_path.png)
