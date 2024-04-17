@@ -139,7 +139,7 @@ return None
 ### Graph implementation
 A simple example is performed. The situation is described with the following graph.
 
-![Graph implemented](images/graph.png)
+![Graph implemented](images/graph_example.png)
 
 We expect the algorithm to be performed as followed:
 
