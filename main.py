@@ -43,6 +43,9 @@ def a_star_search(graph, starting_node, goal_node):
             # Compare the f cost of the node to the f cost of the current node if it exists
             if current_node is None or f_cost[node] < f_cost[current_node]:
                 current_node = node
+            # If two f_cost are equals, then choose by alphabetical order the current_node
+            elif f_cost[node] == f_cost[current_node] and node.name < current_node.name:
+                current_node = node
 
         # Test if it is the goal node
         if current_node == goal_node:
@@ -54,16 +57,22 @@ def a_star_search(graph, starting_node, goal_node):
             # Rearrange the path to have from start node to goal node
             path_found.reverse()
 
-            print("Parsed nodes:")
-            for node in closed:
-                # Print each one of the parsed nodes
-                print("Node:", node.name)
+            print("Parsed nodes: ", end=" ")
+            # Print each parsed node
+            for index, node in enumerate(closed):
+                print(node.name, end="")
+                # Add " - " if it isn't the last node of the closed list
+                if index < len(closed) - 1:
+                    print(" - ", end="")
 
-            print("Path found")
+            print("\nPath found: ", end=" ")
+            # Print each node of the path
             for node in path_found:
-                # Print each node of the path
-                print("Node:",
-                      node.name)
+                # If it is the goal node, then don't add the " - " at the end
+                if node.name != goal_node.name:
+                    print(node.name, end=" - ")
+                else:
+                    print(node.name)
             return path_found
 
         # Remove the node from the list fringe
@@ -77,8 +86,11 @@ def a_star_search(graph, starting_node, goal_node):
             if successor not in closed:
                 # Compute the g cost
                 g_cost[successor] = g_cost[current_node] + weight
-                # Update the f cost
-                f_cost[successor] = successor.f(g_cost[successor])
+                # If the successor has already been found as a successor of another node
+                # And if the cost to get to the successor is less than the previous found
+                # Then update the f_cost
+                if successor not in f_cost or f_cost[successor] > successor.f(g_cost[successor]):
+                    f_cost[successor] = successor.f(g_cost[successor])
                 # Get track of the parent of the successor
                 parents[successor] = current_node
                 # Add the successor to the fringe
