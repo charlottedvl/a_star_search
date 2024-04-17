@@ -89,10 +89,10 @@ def a_star_search(graph, starting_node, goal_node):
                 # If the successor has already been found as a successor of another node
                 # And if the cost to get to the successor is less than the previous found
                 # Then update the f_cost
-                if successor not in f_cost or f_cost[successor] > successor.f(g_cost[successor]):
+                if successor not in f_cost or successor.f(g_cost[successor]) <= f_cost[successor]:
                     f_cost[successor] = successor.f(g_cost[successor])
-                # Get track of the parent of the successor
-                parents[successor] = current_node
+                    # Get track of the parent of the successor
+                    parents[successor] = current_node
                 # Add the successor to the fringe
                 if successor not in fringe:
                     fringe.append(successor)
