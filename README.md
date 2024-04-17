@@ -69,7 +69,7 @@ f_cost = {starting_node: starting_node.f(g_cost[starting_node])}
 parents = {starting_node: None}
 ```
 
-3. Remove the node from fringe having the smallest f_cost.
+3. Remove the node from fringe having the smallest f_cost. If the two nodes have the same cost, select the current_node by alphabetical order.
 
 ``` python
 current_node = None
@@ -179,7 +179,7 @@ We perform the A* search on the graph created previously:
 path = a_star_search(graph_given, start_node, goal_node)
 ```
 
-We obtain those parsed nodes are Start, A, D and C.  
+We obtain those parsed nodes are Start, A, D, B and C.  
 
 ![Parsed nodes](images/results_parsed_nodes.png)
 
