@@ -141,6 +141,10 @@ A simple example is performed. The situation is described with the following gra
 
 ![Graph implemented](images/graph.png)
 
+We expect the algorithm to be performed as followed:
+
+![A_star performed on graph](images/a_star_animated.gif)
+
 We implement the nodes as following: 
 
 ``` python
@@ -179,7 +183,7 @@ We perform the A* search on the graph created previously:
 path = a_star_search(graph_given, start_node, goal_node)
 ```
 
-We obtain those parsed nodes are Start, A, D, B and C.  
+We obtain those parsed nodes are Start, A, D, B and C. The results obtained correspond to the one expected.  
 
 ![Parsed nodes](images/results_parsed_nodes.png)
 
