@@ -1,4 +1,16 @@
 # Implementation of A* Search
+
+## Table of content 
+
+- [A* search](#a-search-)
+- [Implementation](#implementation)
+    - [Classes implemented](#classes-implemented)
+    - [Algorithm](#algorithm)
+- [Example](#example)
+  - [Graph Implementation](#graph-implementation)
+  - [Results](#results)
+
+
 ## A* Search 
 
 In artificial intelligence, A* search is a widely used technique for graph exploration. It is an informed search: it is formulated in terms of weight graphs and uses a heuristic h(n) i.e. an estimation of the cost to the goal from a given node n.  
